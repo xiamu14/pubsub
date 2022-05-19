@@ -19,5 +19,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "exclude": ["dist", "example", "__test__"]
+  "exclude": ["dist", "example", "__test__", "jest.config.ts"]
 }
