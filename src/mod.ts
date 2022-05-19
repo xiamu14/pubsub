@@ -9,6 +9,7 @@ export default class PubSub<E> {
     once?: boolean;
   }[] = [];
 
+  // 发布事件
   public publish: PubTypeFn<E> = (event, msg) => {
     const list = this.handlers ?? [];
 
@@ -23,6 +24,7 @@ export default class PubSub<E> {
     });
   };
 
+  // 订阅事件
   public subscribe: SubTypeFn<E> = (event, callback, once = false) => {
     const list = this.handlers ?? [];
     const id = nanoid();
@@ -31,12 +33,14 @@ export default class PubSub<E> {
     return id;
   };
 
+  // 取消订阅
   public unsubscribe(id: string) {
     let list = this.handlers ?? [];
     list = list.filter((h) => h.id !== id);
     this.handlers = list;
   }
 
+  // 取消全部订阅
   public unsubscribeAll() {
     this.handlers = [];
   }
