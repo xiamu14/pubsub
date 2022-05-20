@@ -1,4 +1,4 @@
-import PubSub from '../src/mod';
+import PubSub, { Subscriber } from '../src/mod';
 
 type events = {
   CreatedPerson: { id: string; name: string };
@@ -6,20 +6,14 @@ type events = {
 };
 
 const pubSub = new PubSub<events>();
-
-const id = pubSub.subscribe(
-  'CreatedPerson',
-  async (message) => {
-    console.log(message.name);
-  },
-  true,
-);
+const subscriber = new Subscriber();
+pubSub.subscribe('CreatedPerson', subscriber, async (message) => {
+  console.log(message.name);
+});
 
 pubSub.publish('CreatedPerson', { id: '1', name: 'cory' });
 
-console.log(id);
-
 setTimeout(() => {
-  // pubSub.unsubscribeAll();
+  pubSub.unsubscribe('CreatedPerson');
   pubSub.publish('CreatedPerson', { id: '2', name: 'jane' });
 }, 200);

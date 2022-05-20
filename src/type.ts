@@ -1,3 +1,5 @@
+import Subscriber from './subscriber';
+
 /**
  * Defines the function type of the publish function.
  *
@@ -19,9 +21,13 @@ export type SubTypeFn<E> = <Key extends string & keyof E>(
   event: Key,
   // fn: MessageFn<E>
   // This passes through the 'message' type to .subscribe()
+  subscriber: Subscriber,
   fn: (message: E[Key]) => void,
-  once?: boolean,
-) => string;
+) => void;
+
+export type UnSubTypeFn<E> = <Key extends string & keyof E>(
+  key: Key | Subscriber,
+) => void;
 
 /**
  * Defines the function type for the subscription callback. Ensures

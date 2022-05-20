@@ -1,6 +1,7 @@
-import { nanoid } from 'nanoid';
-import { MessageFn, PubTypeFn, SubTypeFn } from './type';
+import Subscriber from './subscriber';
+import { MessageFn, PubTypeFn, SubTypeFn, UnSubTypeFn } from './type';
 
+export { default as Subscriber } from './subscriber';
 export default class PubSub<E> {
   private handlers: {
     event: string;
@@ -25,20 +26,24 @@ export default class PubSub<E> {
   };
 
   // 订阅事件
-  public subscribe: SubTypeFn<E> = (event, callback, once = false) => {
+  public subscribe: SubTypeFn<E> = (event, subscriber, callback) => {
     const list = this.handlers ?? [];
-    const id = nanoid();
-    list.push({ id, event, callback, once });
+    const id = subscriber.getId();
+    list.push({ id, event, callback });
     this.handlers = list;
-    return id;
   };
 
   // 取消订阅
-  public unsubscribe(id: string) {
+  public unsubscribe: UnSubTypeFn<E> = (key) => {
     let list = this.handlers ?? [];
-    list = list.filter((h) => h.id !== id);
+    if (key instanceof Subscriber) {
+      const id = key.getId();
+      list = list.filter((h) => h.id !== id);
+    } else {
+      list = list.filter((it) => it.event !== key);
+    }
     this.handlers = list;
-  }
+  };
 
   // 取消全部订阅
   public unsubscribeAll() {
