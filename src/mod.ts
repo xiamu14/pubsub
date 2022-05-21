@@ -33,19 +33,28 @@ export default class PubSub<E> {
     this.handlers = list;
   };
 
-  // 取消订阅
+  /**
+   * 取消订阅
+   * @param key undefined: 取消全部订阅； EventName: 取消事件订阅；Subscriber： 取消订阅者
+   */
   public unsubscribe: UnSubTypeFn<E> = (key) => {
     let list = this.handlers ?? [];
+
     if (key instanceof Subscriber) {
       const id = key.getId();
       list = list.filter((h) => h.id !== id);
-    } else {
+    } else if (typeof key === 'string') {
       list = list.filter((it) => it.event !== key);
+    } else {
+      list = [];
     }
     this.handlers = list;
   };
 
-  // 取消全部订阅
+  /**
+   * @deprecated
+   * 取消全部订阅
+   */
   public unsubscribeAll() {
     this.handlers = [];
   }

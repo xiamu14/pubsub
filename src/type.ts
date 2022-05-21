@@ -26,7 +26,7 @@ export type SubTypeFn<E> = <Key extends string & keyof E>(
 ) => void;
 
 export type UnSubTypeFn<E> = <Key extends string & keyof E>(
-  key: Key | Subscriber,
+  key?: Key | Subscriber,
 ) => void;
 
 /**
