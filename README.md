@@ -68,3 +68,7 @@ const pubsub = new PubSub<EventType>();
 
 pubsub.publish(reset, undefined);
 ```
+
+## 在 React-Native 中使用
+本项目使用了 nanoid 作为事件回调函数唯一 ID，所以在 React-Native 中使用请先安装 nanoid 的使用指南配置 polyfill 库，具体参考如下：
+https://github.com/ai/nanoid/blob/main/README.zh-CN.md#react-native
