@@ -30,14 +30,14 @@ jobs:
         id: name
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
-          path: ./packages/core/package.json
+          path: ./package.json
           property: name
 
       - name: read package version
         id: version
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
-          path: ./packages/core/package.json
+          path: ./package.json
           property: version
 
       - name: WeChat Work notification by text
