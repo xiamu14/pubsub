@@ -1,5 +1,6 @@
 import Subscriber from './subscriber';
 import { MessageFn, PubTypeFn, SubTypeFn, UnSubTypeFn } from './type';
+import './polyfill';
 
 export { default as Subscriber } from './subscriber';
 export default class PubSub<E> {
